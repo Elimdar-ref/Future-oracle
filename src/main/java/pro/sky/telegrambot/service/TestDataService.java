@@ -6,6 +6,7 @@ import pro.sky.telegrambot.repository.WeatherDataRepository;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+
 @Service
 public class TestDataService {
 
@@ -17,11 +18,16 @@ public class TestDataService {
 
     @PostConstruct
     public void init() {
+        if (repository.count() > 0) {
+            System.out.println("📊 Данные уже есть в БД: " + repository.count() + " записей");
+            return;
+        }
+
         WeatherData data = new WeatherData();
-        data.setCity("Moscow");
+        data.setCity("Москва");
         data.setRecordedAt(LocalDateTime.now());
-        data.setTemperature(22.5);
-        data.setHumidity(65.0);
+        data.setTemperature(21.5);
+        data.setHumidity(60.0);
         data.setWeatherDescription("Солнечно");
         data.setSource("Test");
 
